@@ -24,13 +24,17 @@
 
 ## Examples
 
-### Example 1 - Alice, Bob, Carol, Dave and Eve create a VTXO tree with Steve acting as the Ark Service provider
+### Example 1 - Creating a VTXO Tree
 
 ![Architecture overview](./vtxo-tree.svg)
 
+In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO Tree with Steve acting as the Ark Service provider. The tree has two values the first is the bitcoin value of the transaction, the second i an RGB asset value Example Coin (EC).
+
 ### Example 2 - Alice makes a cross atomic swap with Bob.
 
-We start with a VTXO tree with two values, one value is regular bitcoin and a second value that is defined using RGB. At the start everybody has 1.0 och BTC and 1.0 och SecondCoin (SC). The goal is for Bob and Alice to be able to swap 0.2 BTC for 0.2 SC.
+This example uses the VTXO tree in example 1. The goal of this example is to create a HTLC transaction between Bob and Alice, swaping 0.2 BTC for 0.2 EC. 
+
+![Architecture overview](./a-swap-with-b.svg)
 
 1. Alice creates a secret P
 2. Alice creates a HTLC VTXO leaf (HTLC 1) where one of the outs is locked with H(P), the output is created in such a way that Bob can claim the VTXO either on-chain using a unilateral exit or in-ark if and only if he reveals P to S.
