@@ -28,7 +28,7 @@
 
 ![Architecture overview](./vtxo-tree.svg)
 
-In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO Tree with Steve acting as the Ark Service provider. The tree has two values the first is the bitcoin value of the transaction, the second i an RGB asset value Example Coin (EC).
+In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO Tree with Steve acting as the Ark Service provider. The tree has two values the first is the bitcoin value of the transaction, the second i an RGB asset value Example Coin (EC). Now RGB has a lot more flexibility that regualr UTXO:s but for the sake of this example we assume the following, the RGB state transition follow the BTC as marked in the diagram.
 
 ### Example 2 - Alice makes a cross atomic swap with Bob.
 
