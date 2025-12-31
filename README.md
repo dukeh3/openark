@@ -58,3 +58,10 @@ This example uses the VTXO tree in example 1. The goal of this example is to cre
 9. Service-provider grants Bobs request, creating VTXO B2.
 10. Alice requests to Service-provider to cosign the transition from HTLC 1 to VTXO A2.
 11. Service-provider grants Alice request, creating VTXO A2.
+
+
+### Example 4 - Alice pays Bob
+
+1. Bob creates a secret P
+2. Bob sends H(P) to Alice
+3. Alice creates 
