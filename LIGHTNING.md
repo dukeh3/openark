@@ -43,29 +43,33 @@
 ### vtxo_spend_request
 
 nostr_id: 6661
-content: Base64 Encoded version of a PSBT
+content: Base64 Encoded version of a PSBT, including signatures to all the incoming transactions as presented by the party.
 
-1. Signatures to all the incoming transactions as presented by the party.
-   1. Tags all the outputs that are spent.
-   2. Tags all the transaction that are spent.
-   3. Tags all the signers that are requested to contribute.
-   4. Tags all the potential beneficiaries. 
-   5. Tags the template
+Issues by the user that wish to create a new transaction.
+
+    1. Tags all the outputs that are spent.
+    2. Tags all the transaction that are spent.
+    3. Tags all the signers that are requested to contribute.
+    4. Tags all the potential beneficiaries. 
+    5. Tags the template
  
    
 ### vtxo_spend_confirmed
 
 nostr_id: 6662
-content: Base64 Encoded version of a PSBT
+content: Base64 Encoded version of a PSBT, including additional signature that this party provides.
 
-1. Issued by Steve (S), contains the new transaction.
-   1. Tags the txid of the new transaction.
-   2. Tags to vtxo_spend_request.
+Issues by co-signers that needs to be part of the transaction.
 
 ### vtxo_spend_complete
 
 nostr_id: 6663
 content: Base64 Encoded version of the transaction
+
+Issued by Steve (S), contains the new transaction.
+
+    1. Tags the txid of the new transaction.
+    2. Tags to vtxo_spend_request.
 
 ### vtxo_spend_recall_request
 nostr_id: 6664
