@@ -17,29 +17,29 @@
     Operates the nostr relay and runs the ARK.
 
 ### Co-Verifier
-    Has one of the keys to S, as well as their own user key. If a user is a co-verifier, that can be hidden. 
+    Has one of the keys to S, as well as their own User key. If a User is a Co-Verifier, that can be hidden. 
 
 ### User
-    Has only their own user key. 
+    Has only their own User key. 
 
 ## Examples
 
 ### Example 1.0 - Alice, Bob, Carol, Dave and Eve create a VTXO tree
 
-In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO tree with Steve acting as the Ark Service Provider.
+In this example we let five Users Alice, Bob, Carol, Dave and Eve create a VTXO tree with Steve acting as the Ark Service Provider.
 
 1. Steve issues a **new_round_initiate**
    1. Informs everybody that a new round is starting.
 2. Alice, Bob, Carol, Dave and Eve issue a **new_round_join**
-   1. Here the users declare what to onboard, what to offboard and what to transition.
+   1. Here the Users declare what to onboard, what to offboard and what to transition.
 3. Steve issues a **new_round_vtxo_tree_proposal**
    1. Here Steve sends out the VTXO tree for signing.
-4. Alice, Bob, Carol, Dave and Eve issue a **new_vtxo_tree_accept**
-   1. Here the users return the signed nodes.
-5. Steve issues a **new_round_start_confirmation_request**
+4. Alice, Bob, Carol, Dave and Eve issue a **new_round_vtxo_tree_accept**
+   1. Here the Users return the signed nodes.
+5. Steve issues a **new_round_prepare_start**
    1. Here Steve sends out the new root for signature, binding the tree to the root.
-6. Alice, Bob, Carol, Dave and Eve issue a **new_round_start_confirmed**.
-   1. Here all users accept the tree.
+6. Alice, Bob, Carol, Dave and Eve issue a **new_round_start_prepared**.
+   1. Here all Users accept the tree.
 7. Steve issues a **new_round_start**.
    1. The root is deposited and the round starts. This is the official start of the round.  
 
@@ -58,8 +58,8 @@ In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO 
 
 1. The block designated as the closing block at the start of the round is mined. 
 2. Steve issues a **new_round_initiate** message signaling a new round.
-3. Steve issues **round_closed_message**. He tags the **new_round_initiate** message indicating the round to be transferred to.
-4. The users decide how to proceed with the new round, and they each issue a **new_round_join** message.
+3. Steve issues **round_closed**. He tags the **new_round_initiate** message indicating the round to be transferred to.
+4. The Users decide how to proceed with the new round, and they each issue a **new_round_join** message.
    1. Alice indicates that she wants to transfer all of her capital. 
    2. Bob indicates that he wants to offboard 0.5 BTC. 
    3. Carol indicates that she wants to transfer all of her capital. 
@@ -77,10 +77,10 @@ In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO 
    4. A recycle transaction for the round containing:
       1. An output with Dave's capital based on his recycle address.
       2. An output to Steve with the rest of the capital.
-6. The users, Alice, Bob, Carol and Eve verify that the tree matches the request, and then each issues a **new_vtxo_tree_accept**. It contains:
+6. The Users, Alice, Bob, Carol and Eve verify that the tree matches the request, and then each issues a **new_round_vtxo_tree_accept**. It contains:
    1. Signatures for the new VTXO tree.
 7. Steve verifies that everything is there and then issues a new_round_funding_request.
-8. The users, Alice, Bob, Carol and Eve verify that everything is OK, and then each issues a **new_round_funding_accept**. It contains:
+8. The Users, Alice, Bob, Carol and Eve verify that everything is OK, and then each issues a **new_round_funding_accept**. It contains:
    1. Signatures for the forfeit transactions.
    2. Signatures for the funding transactions (only Eve has one).
    3. Signatures for the recycle transaction.
@@ -90,26 +90,26 @@ In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO 
 
 ### Funding a round
 
-There are two ways for users to fund a round, either by signing over capital from a closed round to the Ark Service Provider using a forfeit transaction or by onboarding new capital.
+There are two ways for Users to fund a round, either by signing over capital from a closed round to the Ark Service Provider using a forfeit transaction or by onboarding new capital.
 
 #### Forfeit transactions
 
-A forfeit transaction is a way for users to swap capital from a recently closed round into a new round in a trustless way,
+A forfeit transaction is a way for Users to swap capital from a recently closed round into a new round in a trustless way,
 where depositing the new round root transaction is the atomic action triggering the swap. When Steve proposes a new round, 
 he adds a forfeit root output to the round root transaction. This root is connected to the forfeit trunk and from there 
 to forfeit leaves. When a forfeit transaction is created, a forfeit leaf is added as one of its inputs, along with the capital 
-being forfeited, assuring the user that the only way this forfeit transaction can be activated is if the round root is deposited. 
-If the root is not deposited, then the forfeit transaction is invalid, and the user can still do a unilateral exit.
+being forfeited, assuring the User that the only way this forfeit transaction can be activated is if the round root is deposited. 
+If the root is not deposited, then the forfeit transaction is invalid, and the User can still do a unilateral exit.
 
 #### Recycle transactions
 
 A recycle transaction is a collaborative way to recycle capital from closed rounds that transfer capital to a new round. 
 When the new VTXO tree is created, an optional set of recycle transactions can be added to the **new_round_vtxo_tree_proposal**. 
 These transactions provide a collaborative way to recycle capital from closed rounds. The transactions are designed as follows:
-1. All user capital that is not being transferred to the new round is sent to a recycle address provided by the respective user at round start.
+1. All User capital that is not being transferred to the new round is sent to a recycle address provided by the respective User at round start.
 2. The rest is distributed to the Ark Service Provider.
 
-In most rounds, where all users are online at the end of the round, all capital is moved to the new round, and the only capital left 
+In most rounds, where all Users are online at the end of the round, all capital is moved to the new round, and the only capital left 
 belongs to the Ark Service Provider.
 
 ## RGB
@@ -122,7 +122,7 @@ Block 100 is mined. This starts the end of the round.
 
 ![Architecture overview](./vtxo-tree.svg)
 
-In this example we let five users Alice, Bob, Carol, Dave and Eve create a VTXO tree with Steve acting as the Ark Service Provider. The tree has two values, the first is the bitcoin value of the transaction, the second is an RGB asset value, Example Coin (EC). Now RGB has a lot more flexibility than regular UTXOs but for the sake of this example we assume the following, the RGB state transitions follow the BTC as marked in the diagram.
+In this example we let five Users Alice, Bob, Carol, Dave and Eve create a VTXO tree with Steve acting as the Ark Service Provider. The tree has two values, the first is the bitcoin value of the transaction, the second is an RGB asset value, Example Coin (EC). Now RGB has a lot more flexibility than regular UTXOs but for the sake of this example we assume the following, the RGB state transitions follow the BTC as marked in the diagram.
 
 ### Example 2.2 - Alice makes a cross atomic swap with Bob.
 
