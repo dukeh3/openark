@@ -20,7 +20,59 @@
     Has one of the keys to S, as well as their own User key. If a User is a Co-Verifier, that can be hidden. 
 
 ### User
-    Has only their own User key. 
+    Has only their own User key.
+
+## GuardTowers
+
+ARK requires participants to sign during round closures. OpenARK solves the offline/inactive user problem through **GuardTowers**.
+
+### Components
+
+| Component | Function |
+|-----------|----------|
+| GuardTower Agent | Cloud-based agent that remains online on behalf of users |
+| Activation Window | Only active during round closure bureaucracy |
+| Handoff | Control returns to user wallet after round completion |
+
+### How It Works
+
+1. User delegates signing authority to their GuardTower for round closure operations
+2. GuardTower remains online during round transitions
+3. When a round closes, GuardTower signs on behalf of the user
+4. After the round completes, control returns to the user's wallet
+5. GuardTower only has authority during the activation window, minimizing trust requirements
+
+This architecture is particularly suited for always-on cloud infrastructure, enabling users to participate in rounds even when their primary wallet is offline.
+
+## Trustless Liquidity Provisioning
+
+A key innovation in OpenARK is enabling external liquidity providers (LPs) to fund ASP rounds without custody risk to either party.
+
+### The Problem
+
+When an ASP closes a round, it needs sufficient liquidity to execute the VTXO swap. Small or new ASPs may lack the capital to service user demand.
+
+### The Solution: Cryptographic LP Integration
+
+External LPs can participate in round closures through multisig integration:
+
+1. ASP needs liquidity to close round
+2. LP offers to provide required capital
+3. ASP includes LP's key in multisig structure (LP key becomes part of ASP key for this round)
+4. LP independently verifies no double-spend conditions
+5. Pre-signed contract ensures revocation TX pays LP's share to LP's key
+6. Round closes — trustless for both parties
+
+### Security Properties
+
+| Property | Mechanism |
+|----------|-----------|
+| LP fund safety | LP key required in multisig; revocation pays to LP key |
+| ASP non-custodial proof | LP can cryptographically verify ASP cannot rug users |
+| Double-spend prevention | LP validates state before providing liquidity |
+| Atomicity | Swap is all-or-nothing via pre-signed contracts |
+
+The LP effectively becomes a temporary participant in the round's key structure, not a lender with counterparty risk. This enables ASPs to scale without proportional capital requirements while maintaining trustless guarantees.
 
 ## Examples
 
