@@ -344,7 +344,6 @@ sequenceDiagram
     Eve->>Steve: new_round_start_prepared (signatures)
     Victoria->>Steve: new_round_start_prepared (signatures)
 
-    Note over Steve: Steve signs/broadcasts vtxo-root on-chain (anchoring the round)
     par Multicast: new_round_start
         Steve->>Alice: new_round_start (root deposited; round active)
         Steve->>Bob: new_round_start (root deposited; round active)
