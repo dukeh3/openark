@@ -291,7 +291,6 @@ sequenceDiagram
     participant Carol as "Carol"
     participant Dave as "Dave"
     participant Eve as "Eve"
-
     par Multicast: new_round_initiate
         Steve->>Alice: new_round_initiate (round_id, params)
         Steve->>Bob: new_round_initiate (round_id, params)
@@ -300,7 +299,6 @@ sequenceDiagram
         Steve->>Eve: new_round_initiate (round_id, params)
         Steve->>Victoria: new_round_initiate (round_id, params)
     end
-
     Note over Alice,Victoria: Participants declare onboarding/offboarding/transition intents
     Alice->>Steve: new_round_join (onboard/offboard/transition)
     Bob->>Steve: new_round_join (onboard/offboard/transition)
@@ -308,7 +306,6 @@ sequenceDiagram
     Dave->>Steve: new_round_join (onboard/offboard/transition)
     Eve->>Steve: new_round_join (onboard/offboard/transition)
     Victoria->>Steve: new_round_join (liquidity contribution)
-
     Note over Steve,Victoria: Steve proposes the VTXO tree + related transactions for signing
     par Multicast: new_round_vtxo_tree_proposal
         Steve->>Alice: new_round_vtxo_tree_proposal (vtxo-tree, forfeit-tree, recycle txs)
@@ -318,14 +315,12 @@ sequenceDiagram
         Steve->>Eve: new_round_vtxo_tree_proposal (vtxo-tree, forfeit-tree, recycle txs)
         Steve->>Victoria: new_round_vtxo_tree_proposal (vtxo-tree, forfeit-tree, recycle txs)
     end
-
     Alice->>Steve: new_round_vtxo_tree_accept (signatures)
     Bob->>Steve: new_round_vtxo_tree_accept (signatures)
     Carol->>Steve: new_round_vtxo_tree_accept (signatures)
     Dave->>Steve: new_round_vtxo_tree_accept (signatures)
     Eve->>Steve: new_round_vtxo_tree_accept (signatures)
     Victoria->>Steve: new_round_vtxo_tree_accept (signatures)
-
     par Multicast: new_round_prepare_start
         Steve->>Alice: new_round_prepare_start
         Steve->>Bob: new_round_prepare_start
@@ -334,14 +329,12 @@ sequenceDiagram
         Steve->>Eve: new_round_prepare_start
         Steve->>Victoria: new_round_prepare_start
     end
-
     Alice->>Steve: new_round_start_prepared (signatures)
     Bob->>Steve: new_round_start_prepared (signatures)
     Carol->>Steve: new_round_start_prepared (signatures)
     Dave->>Steve: new_round_start_prepared (signatures)
     Eve->>Steve: new_round_start_prepared (signatures)
     Victoria->>Steve: new_round_start_prepared (signatures)
-
     par Multicast: new_round_start
         Steve->>Alice: new_round_start (root deposited; round active)
         Steve->>Bob: new_round_start (root deposited; round active)
