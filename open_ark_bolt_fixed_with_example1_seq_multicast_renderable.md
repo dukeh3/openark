@@ -292,9 +292,6 @@ sequenceDiagram
     participant Dave as "Dave"
     participant Eve as "Eve"
 
-    Note over Steve,Victoria: Example 1.0 — Round initiation (Victoria participates as XLP in this round)
-    Note over Steve,Eve: Multicast semantics: Steve sends once; delivery is to all round participants
-
     par Multicast: new_round_initiate
         Steve->>Alice: new_round_initiate (round_id, params)
         Steve->>Bob: new_round_initiate (round_id, params)
