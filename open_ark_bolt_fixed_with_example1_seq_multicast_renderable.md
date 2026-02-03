@@ -319,7 +319,6 @@ sequenceDiagram
         Steve->>Victoria: new_round_vtxo_tree_proposal (vtxo-tree, forfeit-tree, recycle txs)
     end
 
-    Note over Alice,Victoria: Participants verify and return signatures on the proposed tree
     Alice->>Steve: new_round_vtxo_tree_accept (signatures)
     Bob->>Steve: new_round_vtxo_tree_accept (signatures)
     Carol->>Steve: new_round_vtxo_tree_accept (signatures)
@@ -327,7 +326,6 @@ sequenceDiagram
     Eve->>Steve: new_round_vtxo_tree_accept (signatures)
     Victoria->>Steve: new_round_vtxo_tree_accept (signatures)
 
-    Note over Steve,Victoria: Steve requests final preparation signatures (forfeit/recycle/onboarding)
     par Multicast: new_round_prepare_start
         Steve->>Alice: new_round_prepare_start
         Steve->>Bob: new_round_prepare_start
