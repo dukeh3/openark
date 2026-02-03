@@ -185,9 +185,8 @@ This state has in turn three sub-states: invite, confirm, and fund.
 ```mermaid
 stateDiagram-v2
     [*] --> Invite
-    Invite --> Confirm: min_timeout reached
-or max_timeout reached
-    Confirm --> Fund: all required signatures collected
+    Invite --> Confirm: min_timeout reached and all users responded or max_timeout reached
+    Confirm --> Fund: vtxo-tree signed
     Fund --> [*]: vtxo-root broadcast
 ```
 
@@ -279,7 +278,6 @@ sequenceDiagram
 
     Initiator->>ASP: vtxo_spend_request (template, params, tags, sig)
     loop for each tagged user
-        ASP->>Cosigners: forward request
         Cosigners->>ASP: vtxo_spend_accept (sig)
     end
     ASP->>Initiator: vtxo_spend_complete (fully cosigned tx)
