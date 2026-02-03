@@ -284,8 +284,8 @@ In this example, the users join a new ARK round run by the ASP (**Steve**). An o
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Steve as "Steve (ASP)"
     participant Victoria as "Victoria (XLP)"
+    participant Steve as "Steve (ASP)"
     participant Alice as "Alice"
     participant Bob as "Bob"
     participant Carol as "Carol"
@@ -298,7 +298,6 @@ sequenceDiagram
     Steve->>Carol: new_round_initiate (round_id, params)
     Steve->>Dave: new_round_initiate (round_id, params)
     Steve->>Eve: new_round_initiate (round_id, params)
-    Steve->>Victoria: new_round_initiate (round_id, params)
 
     Note over Alice,Victoria: 2) Participants join
     Alice->>Steve: new_round_join (onboard/offboard/transition)
@@ -306,7 +305,6 @@ sequenceDiagram
     Carol->>Steve: new_round_join (onboard/offboard/transition)
     Dave->>Steve: new_round_join (onboard/offboard/transition)
     Eve->>Steve: new_round_join (onboard/offboard/transition)
-    Victoria->>Steve: new_round_join (liquidity contribution)
 
     Note over Steve,Victoria: 3) Tree proposal
     Steve->>Alice: new_round_vtxo_tree_proposal (tree, related txs)
@@ -314,7 +312,6 @@ sequenceDiagram
     Steve->>Carol: new_round_vtxo_tree_proposal (tree, related txs)
     Steve->>Dave: new_round_vtxo_tree_proposal (tree, related txs)
     Steve->>Eve: new_round_vtxo_tree_proposal (tree, related txs)
-    Steve->>Victoria: new_round_vtxo_tree_proposal (tree, related txs)
 
     Note over Alice,Victoria: 4) Tree acceptance
     Alice->>Steve: new_round_vtxo_tree_accept (signatures)
@@ -322,7 +319,6 @@ sequenceDiagram
     Carol->>Steve: new_round_vtxo_tree_accept (signatures)
     Dave->>Steve: new_round_vtxo_tree_accept (signatures)
     Eve->>Steve: new_round_vtxo_tree_accept (signatures)
-    Victoria->>Steve: new_round_vtxo_tree_accept (signatures)
 
     Note over Steve,Victoria: 5-7) Preparation and start
     Steve->>Alice: new_round_prepare_start (root-to-sign)
@@ -330,19 +326,16 @@ sequenceDiagram
     Steve->>Carol: new_round_prepare_start (root-to-sign)
     Steve->>Dave: new_round_prepare_start (root-to-sign)
     Steve->>Eve: new_round_prepare_start (root-to-sign)
-    Steve->>Victoria: new_round_prepare_start (root-to-sign)
 
     Alice->>Steve: new_round_start_prepared
     Bob->>Steve: new_round_start_prepared
     Carol->>Steve: new_round_start_prepared
     Dave->>Steve: new_round_start_prepared
     Eve->>Steve: new_round_start_prepared
-    Victoria->>Steve: new_round_start_prepared
 
     Steve->>Alice: new_round_start (root anchored)
     Steve->>Bob: new_round_start (root anchored)
     Steve->>Carol: new_round_start (root anchored)
     Steve->>Dave: new_round_start (root anchored)
     Steve->>Eve: new_round_start (root anchored)
-    Steve->>Victoria: new_round_start (root anchored)
 ```
