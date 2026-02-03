@@ -292,7 +292,7 @@ sequenceDiagram
     participant Dave as "Dave"
     participant Eve as "Eve"
 
-    Note over Steve,Victoria: 1) Round initiation
+    Note over Victoria, Eve: 1) Round initiation
     Steve->>Alice: new_round_initiate (round_id, params)
     Steve->>Bob: new_round_initiate (round_id, params)
     Steve->>Carol: new_round_initiate (round_id, params)
