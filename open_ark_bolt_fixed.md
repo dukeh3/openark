@@ -255,3 +255,7 @@ Existing Lightning nodes are not required to understand ARK internals.
 ## 18. Acknowledgements
 
 This design draws inspiration from Lightning, channel factories, and the ARK research lineage.
+
+## 19. Example
+
+![ARK Example](OpenARK-example.svg)
