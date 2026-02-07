@@ -751,4 +751,65 @@ sequenceDiagram
 
 ![ARK Example](OpenARK-example.svg)
 
+Example 1.3 David uses Victorias lightning service to receive a payment from Xavier that has an external channel to Victoria.
 
+Prerequisites: 
+- Victoria is has collected a hashmap mapping scid_alias to pubkey, and nostrid of the users in the ARK. 
+
+1. David creates a QR code containing the invoice for 0.1 BTC.
+    - it contains the following:
+      1. The invoice amount. (0.1 BTC)
+      2. The invoice payment hash.
+      3. The payment secret.
+      4. routing hints, containing:
+         1. Victorias node id.
+         2. Davids scid_alias.
+         3. fee_base_msat.
+         4. fee_proportional_millionths.
+         5. cltv_expiry_delta.
+      5. The signature of the invoice, containing Daves node pubkey.
+
+2. Xavier scans the QR code and sends the payment
+   - from this he creates a HTLC including an onion payload.
+     - the onion payload contains two layers, first Victoria's, and then Davids.
+3. Xavier sends the HTLC to Victoria, using `update_add_htlc`.
+   - The HTLC contains the following values:
+     - 
+4. Victoria recives the HTLC it cointains.
+   - H(P)
+   - Timeouts
+   - Value
+   - The onion layer contains:
+     - Daves scid_alias. 
+     - Daves onion layer.
+
+5. Xavier sends `commitment_signed`
+6. Victoria answers with `revoke_and_ack`
+7. Victoria sends `commitment_signed`
+8. Xavier answers with `revoke_and_ack`
+
+9. Victoria looks up Daves scid and sees that it is pointing to an in ARK user.
+
+10. Victoria creates a `vtxo_spend_request` tagged as `HTLC_Offer`, it is:
+    - tagged with Daves pubkey.
+    - contains Daves onion layer.
+    - locked with H(P) 
+    - Timeouts
+
+11. Steve verifies required signatures and issues `vtxo_spend_complete`.
+
+12. Daves sees that he as received a `HTLC_Offer`, he decodes the onion layer and verifies the signature.
+    - It cointains the following values:
+      - payment secret.
+
+13. David accepts the payment, creates a `vtxo_spend_request` tagged as `HTLC_Success`.
+    - It contains the following values:
+    - H(P)
+
+14. Steve verifies `H(P)`, and issues `vtxo_spend_complete`.
+
+15. Victoria sees that David has accepted the HTLC, she uses the info to send `update_fulfill_htlc` to Xavier. 
+16. Victoria sends  `commitment_signed`
+17. Xavier answers with `revoke_and_ack`
+18. Xavier sends  `commitment_signed` 
+19. Victoria answers with `revoke_and_ack`
