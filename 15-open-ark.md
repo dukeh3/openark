@@ -942,3 +942,55 @@ If Dave remains offline until the recycle block height is reached, Steve MAY bro
 | **Offline safety** | Recycle transactions preserve capital for users who miss the transition |
 | **Unilateral exit** | Users can always broadcast their VTXO path on-chain, regardless of round state |
 | **Open participation** | New users can onboard and existing users can offboard during any refresh |
+
+
+RM:
+
+A round transition is done in several phases.
+
+Phase 1. -- Discovery
+
+Trigger: Closing block is found.
+Goal: Discover what the users see the next round.
+
+
+In this phase all transactions in the current vtxo-tree stops, and the vtxo-tree enters the Close state.
+The state of the old tree is tallied, and questions are sallied out to the users asking them about what they want to do for the next round.
+
+The users then have a fixed number of seconds to reply. Users that fail to do so will be classed as passive and their assets will be offboarded.
+
+Phase 2. -- Proposal.
+Trigger: Timeout or all users have replied
+Goal: Create a new vtxo-tree, forfeit-tree, and recycle transactions, ie have a new proposal that everybody can agree on and send it out.
+
+From the information collected in the previous round, a new vtxo-tree is constructed, as well as forfeit-tree, and recycle transactions.
+
+Phase 3.1. – Tree agreement.
+Trigger: a proposal is sent out.
+Goal: Collect the signatures for the vtxo-tree, excluding the vtxo-root. This assures everybody that has vtxo-leaf in the new vtxo-tree that they will be able to do a unilateral exit once the root is deposited.
+
+Phase 3.2. – Transfer agreement.
+Trigger: the vtxo-tree is finalized.
+Goal: Collect the signatures for the transfer of assets from the old vtxo-tree to the new vtxo-tree, this includes:
+ - the forfeit transactions, 
+ - funding transactions, 
+ - recycle transactions.
+
+Phase 4 – Deposit root
+Trigger: All the signatures have been collected.
+Goal: Deposit the vtxo-root into the blockchain, this will finalize the round and start the next round.
+
+In this phase ASP signs the vtxo-root and deposits it into the blockchain.
+This moves the old-tree from closed to transferred, and the new tree from initialized to stated. 
+
+Phase 5.1 – Collaborative Recycle
+Trigger: new vtxo-root is deposited onchain.
+Goal: Recycle the capital by depositing the collaborative recycle transaction.  
+
+Here we wait for the remaining signatures from the passive users to arrive, if they do so then we sign and recycle, moving the tree to the recycled state.
+
+Phase 5.1 – Unilateral Recycle
+Trigger: the cutoff block is found.
+Goal: Recycle the capital by depositing the unilateral recycle transaction.
+
+Here we deposit the unilateral recycle transaction, moving the old vtxo-tree into the recycled state.  
